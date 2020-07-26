@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_ATAS_PW": "jj3a1lApAPwM2E7w",
+        "MONGO_ATLAS_DB": "node-rest-shop",
+        "JWT_KEY": "$2b$10$U8tsEuIO39aRr1QcrthhYeE0iOVnRhn"
+    }
+}
