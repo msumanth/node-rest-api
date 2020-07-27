@@ -3,16 +3,16 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
- 
-console.log(process.env.MONGO_ATAS_PW);
+
+console.log('mongodbcredentials[username:' + process.env.MONGO_ATLAS_USR + ',pwd:' + process.env.MONGO_ATAS_PW + ']');
 
 mongoose.connect(
-    'mongodb+srv://nodeuser1:' + process.env.MONGO_ATAS_PW + '@node-rest-shop.xe8gi.azure.mongodb.net/' + process.env.MONGO_ATLAS_DB + '?retryWrites=true&w=majority'
+    'mongodb+srv://' + process.env.MONGO_ATLAS_USR + ':' + process.env.MONGO_ATAS_PW + '@node-rest-shop.xe8gi.azure.mongodb.net/' + process.env.MONGO_ATLAS_DB + '?retryWrites=true&w=majority'
     , {
         //useMongoClient: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useCreateIndex:true
+        useCreateIndex: true
     }
 );
 
@@ -25,7 +25,7 @@ const usersRoutes = require('./api/routes/users');
 
 
 app.use(morgan('dev'));
-app.use('/uploads',express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -50,6 +50,8 @@ app.use((req, res, next) => {
 app.use('/products', productRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/users', usersRoutes);
+
+app.use("/", (req, res, next) => { res.send("Node Rest API Build with Express and MongoDB") });
 
 app.use((req, res, next) => {
     const error = new Error('NOT FOUND');
